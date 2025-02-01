@@ -1,7 +1,9 @@
 const Product = require("../models/product");
 
 const getAllProductsStatic = async (req, res) => {
-  const products = await Product.find().select("name price").limit();
+  const products = await Product.find({ price: { $gt: 30 } })
+    .select("name price")
+    .limit();
   res.status(200).json({ products });
 };
 
