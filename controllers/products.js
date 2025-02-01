@@ -23,6 +23,12 @@ const getAllProducts = async (req, res) => {
     result = result.select(fields.split(",").join(" "));
   }
 
+  const page = +req.query.page || 1;
+  const limit = +req.query.limit || 10;
+  const skip = page * limit - limit;
+
+  result = result.skip(skip).limit(limit);
+
   const products = await result;
   res.status(200).json({ products, length: products.length });
 };
